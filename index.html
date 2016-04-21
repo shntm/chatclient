@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Chat client</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            var socket=io();
+            var mss;
+            var chats;
+            var nick = prompt("Enter Nickname","Harry Potter");
+            function send_msg(){
+                mss=document.getElementById('msg');
+                chats=document.getElementById('chats');
+                /*var ele = document.createElement('P');
+                ele.innerHTML=mss.value;
+                chats.appendChild(ele);*/
+                socket.emit('chat message',nick+": "+mss.value);
+                mss.value="";
+                //console.log(ele);
+            }
+            socket.on('chat message',function(msg){
+                chats=document.getElementById('chats');
+                var ele = document.createElement('P');
+                ele.innerHTML=msg;
+                chats.appendChild(ele);
+                //console.log(ele);
+            });
+            
+
+            
+            
+        </script>
+        <style>
+            #chat{
+                position:fixed;
+                bottom:0px;
+                width:100%;
+                
+            }
+            #msg{
+                width:80%;
+                height:50px;
+                display:inline-block;
+            }
+            #btn{
+                //height:50px;
+                background:#888;
+                //width:18%;
+                display:inline-block;
+                padding:18px;
+            }
+        </style>
+        
+        </head>
+    <body>
+        <div id="chats">
+        </div>
+         <form id="chat">
+            <input type="text" id="msg" onkeydown="if (event.keyCode ==13){ event.preventDefault();
+            document.getElementById('btn').click();}" placeholder="Enter text..."/>
+            <div id="btn" onclick="send_msg();">Submit</div>
+        </form>
+    </body>
+</html>

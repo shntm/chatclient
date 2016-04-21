@@ -1,0 +1,6 @@
+{
+    "name": "qchat",
+    "version": "0.0.1",
+    "description": "Quick Chat using sockets and node",
+    "dependencies":{}
+}
